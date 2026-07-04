@@ -1,5 +1,10 @@
 package Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import Model.Account;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -28,6 +33,14 @@ public class SocialMediaController {
     private void exampleHandler(Context context) {
         context.json("sample text");
     }
+
+
+    // private void userRegistrationHandler(Context context) throws JsonProcessingException{
+    //     ObjectMapper mapper = new ObjectMapper();
+    //     Account account = mapper.readValue(context.body(), Account.class);
+
+
+    // }
 
 
 }
