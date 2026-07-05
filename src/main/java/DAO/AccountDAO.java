@@ -1,6 +1,7 @@
 package DAO;
 
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,17 +23,21 @@ public Account userRegistration(Account account){
 
 try (Connection connection = ConnectionUtil.getConnection()) {
   
-PreparedStatement ps = connection.prepareStatement(userRegistrationQuery);
-ps.setString(2, account.getUsername());
-ps.setString(3, account.getPassword());
+PreparedStatement ps = connection.prepareStatement(userRegistrationQuery, java.sql.Statement.RETURN_GENERATED_KEYS);
+ps.setString(1, account.getUsername());
+ps.setString(2, account.getPassword());
 
 
-ResultSet rs = ps.executeQuery();
+int row = ps.executeUpdate();
+
+if (row == 0) {
+  return null;
+}
+
+ResultSet rs = ps.getGeneratedKeys();
 
 while (rs.next()) {
   account.setAccount_id(rs.getInt("account_id"));
-  account.setUsername(rs.getString("username"));
-  account.setPassword(rs.getString("password"));
 }
 
 return account;
