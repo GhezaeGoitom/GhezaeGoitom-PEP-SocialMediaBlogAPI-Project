@@ -12,7 +12,7 @@ import Util.ConnectionUtil;
 public class AccountDAO {
   
 String userRegistrationQuery = "INSERT INTO account(username,password) VALUES (?,?)";
-String getUserByUserNameQuery = "SELECT * FROM account WHERE account_id = ?";
+String getUserByUserNameQuery = "SELECT * FROM account WHERE username = ?";
 
 
 
