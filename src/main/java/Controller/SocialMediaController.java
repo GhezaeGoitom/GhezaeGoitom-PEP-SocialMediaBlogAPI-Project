@@ -48,12 +48,18 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(context.body(), Account.class); 
 
-        Account result = accountService.userRegistrationSerice(account);
-
-        if(result != null){
-            context.json(mapper.writeValueAsString(result));
-        }else{
-            context.status(400);
+        try {
+            Account result = accountService.userRegistrationSerice(account);
+            context.json(result); 
+        } catch (IllegalArgumentException e) {
+           if ("username empty or blank".equals(e.getMessage())) {
+                context.status(400);
+            } else if ("password lessthan 4".equals(e.getMessage())) {
+                context.status(400);
+            }else
+            {
+                context.status(500);
+            }
         }
     }
 

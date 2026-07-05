@@ -31,7 +31,7 @@ ps.executeUpdate();
 
 return account;
 } catch (Exception e) {
-  System.out.println("Registration error :"+e);
+  System.out.println("Registration error : "+e);
 }
 return null;
 }
