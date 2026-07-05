@@ -52,7 +52,9 @@ public class SocialMediaController {
             Account result = accountService.userRegistrationSerice(account);
             context.json(result); 
         } catch (IllegalArgumentException e) {
-           if ("username empty or blank".equals(e.getMessage())) {
+            if ("userName already exist".equals(e.getMessage())) {
+                context.status(400);
+            } else if ("username empty or blank".equals(e.getMessage())) {
                 context.status(400);
             } else if ("password lessthan 4".equals(e.getMessage())) {
                 context.status(400);
