@@ -23,8 +23,8 @@ public Account userRegistration(Account account){
 try (Connection connection = ConnectionUtil.getConnection()) {
   
 PreparedStatement ps = connection.prepareStatement(userRegistrationQuery);
-ps.setString(1, account.username);
-ps.setString(2, account.password);
+ps.setString(1, account.getUsername());
+ps.setString(2, account.getPassword());
 
 
 ps.executeUpdate();
