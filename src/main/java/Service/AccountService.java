@@ -37,4 +37,7 @@ private Account getUserByUserName(String userName){
 }
 
 
+public Account getUserByUserNameAndPassword(String userName, String password){
+return accountDAO.getUserByUserNameAndPassword(userName, password);
+}
 }

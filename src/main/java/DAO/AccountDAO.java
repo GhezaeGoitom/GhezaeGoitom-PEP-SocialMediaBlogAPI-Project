@@ -1,7 +1,6 @@
 package DAO;
 
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +13,7 @@ public class AccountDAO {
   
 String userRegistrationQuery = "INSERT INTO account(username,password) VALUES (?,?)";
 String getUserByUserNameQuery = "SELECT * FROM account WHERE username = ?";
+String getUserByUserNameAndPasswordQuery = "SELECT * FROM account WHERE username = ? AND password = ?";
 
 
 
@@ -75,6 +75,35 @@ public Account getUserByUserName(String userName){
 
  return account;
 }
+
+
+
+public Account getUserByUserNameAndPassword(String userName, String password){
+ 
+  Account account = null;
+  
+   try (Connection connection = ConnectionUtil.getConnection()) {
+ 
+ 
+   PreparedStatement ps = connection.prepareStatement(getUserByUserNameAndPasswordQuery);
+   ps.setString(1, userName);
+   ps.setString(2, password);
+ 
+   ResultSet rs = ps.executeQuery();
+ 
+   while (rs.next()) {
+     account = new Account();
+     account.setAccount_id(rs.getInt("account_id"));
+     account.setUsername(rs.getString("username"));
+     account.setPassword(rs.getString("password"));
+   }
+    
+  } catch (SQLException e) {
+   System.out.println("There is an error retrieving user : " + e.getMessage());
+  }
+ 
+  return account;
+ }
 
 
 
