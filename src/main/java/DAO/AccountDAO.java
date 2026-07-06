@@ -15,6 +15,8 @@ String userRegistrationQuery = "INSERT INTO account(username,password) VALUES (?
 String getUserByUserNameQuery = "SELECT * FROM account WHERE username = ?";
 String getUserByUserNameAndPasswordQuery = "SELECT * FROM account WHERE username = ? AND password = ?";
 
+String getUserByIdQuery = "SELECT * FROM account WHERE account_id = ?";
+
 
 
 
@@ -88,6 +90,35 @@ public Account getUserByUserNameAndPassword(String userName, String password){
    PreparedStatement ps = connection.prepareStatement(getUserByUserNameAndPasswordQuery);
    ps.setString(1, userName);
    ps.setString(2, password);
+ 
+   ResultSet rs = ps.executeQuery();
+ 
+   while (rs.next()) {
+     account = new Account();
+     account.setAccount_id(rs.getInt("account_id"));
+     account.setUsername(rs.getString("username"));
+     account.setPassword(rs.getString("password"));
+   }
+    
+  } catch (SQLException e) {
+   System.out.println("There is an error retrieving user : " + e.getMessage());
+  }
+ 
+  return account;
+ }
+
+
+
+
+ public Account getUserById(int account_id){
+ 
+  Account account = null;
+  
+   try (Connection connection = ConnectionUtil.getConnection()) {
+ 
+ 
+   PreparedStatement ps = connection.prepareStatement(getUserByIdQuery);
+   ps.setInt(1, account_id);
  
    ResultSet rs = ps.executeQuery();
  

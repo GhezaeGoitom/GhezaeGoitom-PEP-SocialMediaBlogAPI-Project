@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Model.Account;
+import Model.Message;
 import Service.AccountService;
+import Service.MessageService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -21,9 +23,11 @@ public class SocialMediaController {
      */
 
      AccountService accountService;
+     MessageService messageService;
     
     public SocialMediaController(){
         accountService = new AccountService();
+        messageService = new MessageService();
     }
     
     
@@ -31,6 +35,7 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         app.post("/register", this::accountRegistrationHandler);
         app.post("/login", this::accountLoginHandler);
+        app.post("/messages", this::createMessage);
        
 
         return app;
@@ -86,12 +91,24 @@ public class SocialMediaController {
 
     }
 
-    // private void userRegistrationHandler(Context context) throws JsonProcessingException{
-    //     ObjectMapper mapper = new ObjectMapper();
-    //     Account account = mapper.readValue(context.body(), Account.class);
+ private void createMessage(Context context) throws JsonProcessingException{
+    ObjectMapper mapper = new ObjectMapper();
+    Message message = mapper.readValue(context.body(), Message.class);
 
+try {
+ context.json(messageService.createMessage(message));
+} catch (IllegalArgumentException e) {
+    if ("message null or blank".equals(e.getMessage())) {
+        context.status(400);
+    }else if("message above 255".equals(e.getMessage())){
+        context.status(400);
+    }else if("account not found".equals(e.getMessage())){
+        context.status(400);
+    }else{
+        context.status(500);
+    }
+}
 
-    // }
-
+ }
 
 }
