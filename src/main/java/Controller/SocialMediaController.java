@@ -134,7 +134,7 @@ private void getMessageById(Context context){
         if (message != null) {
          context.json(message);   
         }else{
-            new ArrayList<>();
+            context.json(new ArrayList<>());
         }
         context.status(200);
     } catch (Exception e) {
