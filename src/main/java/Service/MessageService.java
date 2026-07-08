@@ -25,7 +25,7 @@ if (message.getMessage_text().isEmpty() || message.getMessage_text().isBlank()) 
   throw new IllegalArgumentException("message null or blank");
 }
 
-if (message.getMessage_text().length() > 256) {
+if (message.getMessage_text().length() > 255) {
   throw new IllegalArgumentException("message above 255");
 }
 
