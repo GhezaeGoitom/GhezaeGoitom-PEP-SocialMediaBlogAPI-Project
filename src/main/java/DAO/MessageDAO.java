@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.Message;
 import Util.ConnectionUtil;
@@ -13,6 +15,7 @@ public class MessageDAO {
   
 
 String createMessageQuery = "INSERT INTO message(posted_by,message_text,time_posted_epoch) VALUES (?,?,?)";
+String getAllMessagesQuery = "SELECT * FROM message";
 
 
 public Message createMessage(Message message){
@@ -41,6 +44,34 @@ while (rs.next()) {
 }
 
 return message;
+}
+
+
+
+public List<Message> getAllMessages(){
+
+  List<Message> result = new ArrayList<>();
+
+  try (Connection connection = ConnectionUtil.getConnection()) {
+    PreparedStatement ps = connection.prepareStatement(getAllMessagesQuery);
+
+    ResultSet rs = ps.executeQuery();
+
+    while (rs.next()) {
+      result.add(new Message(
+       rs.getInt("message_id"),  
+       rs.getInt("posted_by"),
+       rs.getString("message_text"),
+       rs.getLong("time_posted_epoch")
+      ));
+    }
+    
+  } catch (SQLException e) {
+    System.out.println("There is an error retrieving messages : "+e.getMessage());
+  }
+
+  return result;
+
 }
 
 

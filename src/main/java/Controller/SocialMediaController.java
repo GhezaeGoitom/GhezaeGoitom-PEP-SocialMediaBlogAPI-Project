@@ -36,6 +36,7 @@ public class SocialMediaController {
         app.post("/register", this::accountRegistrationHandler);
         app.post("/login", this::accountLoginHandler);
         app.post("/messages", this::createMessage);
+        app.get("/messages", this::getAllMessages);
        
 
         return app;
@@ -111,4 +112,16 @@ try {
 
  }
 
+
+private void getAllMessages(Context context){
+    try {
+        context.json(messageService.getAllMessages());
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
+
+
+
+}
+
