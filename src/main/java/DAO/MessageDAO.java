@@ -16,6 +16,7 @@ public class MessageDAO {
 
 String createMessageQuery = "INSERT INTO message(posted_by,message_text,time_posted_epoch) VALUES (?,?,?)";
 String getAllMessagesQuery = "SELECT * FROM message";
+String getMessageByIdQuery = "SELECT * FROM message WHERE message_id = ?";
 
 
 public Message createMessage(Message message){
@@ -74,6 +75,33 @@ public List<Message> getAllMessages(){
 
 }
 
+
+
+public Message getMessageById(int message_id){
+
+  Message message = new Message();
+
+try (Connection connection = ConnectionUtil.getConnection()) {
+
+  PreparedStatement ps = connection.prepareStatement(getAllMessagesQuery);
+  ps.setInt(1, message_id);
+
+  ResultSet rs = ps.executeQuery();
+
+  while (rs.next()) {
+    message.setMessage_id(rs.getInt("message_id"));  
+    message.setPosted_by(rs.getInt("posted_by"));
+    message.setMessage_text(rs.getString("message_text"));
+    message.setTime_posted_epoch(rs.getLong("time_posted_epoch"));
+  }
+  
+} catch (SQLException e) {
+  System.out.println("There is an error retrieving selected message : "+e.getMessage());
+}
+
+return message;
+
+}
 
 
 }

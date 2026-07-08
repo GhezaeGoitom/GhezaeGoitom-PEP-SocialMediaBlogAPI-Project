@@ -16,7 +16,7 @@ messageDAO = new MessageDAO();
 }
 
 
-
+// create message
 public Message createMessage(Message message){
 
   AccountDAO accountDAO = new AccountDAO();
@@ -38,12 +38,15 @@ return messageDAO.createMessage(message);
 }
 
 
-
+// get all the messages
 public List<Message> getAllMessages(){
-
 return messageDAO.getAllMessages();
+}
 
 
+// get the message by id
+public Message getMessageById(int id){
+  return messageDAO.getMessageById(id);
 }
 
 }
