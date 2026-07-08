@@ -86,11 +86,11 @@ try (Connection connection = ConnectionUtil.getConnection()) {
   PreparedStatement ps = connection.prepareStatement(getMessageByIdQuery);
   ps.setInt(1, message_id);
 
-  message = new Message();
-
   ResultSet rs = ps.executeQuery();
 
+
   while (rs.next()) {
+    message = new Message();
     message.setMessage_id(rs.getInt("message_id"));  
     message.setPosted_by(rs.getInt("posted_by"));
     message.setMessage_text(rs.getString("message_text"));
