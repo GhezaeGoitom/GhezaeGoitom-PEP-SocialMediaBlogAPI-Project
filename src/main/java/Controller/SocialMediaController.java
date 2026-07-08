@@ -119,6 +119,7 @@ try {
 private void getAllMessages(Context context){
     try {
         context.json(messageService.getAllMessages());
+        context.status(200);
     } catch (Exception e) {
         System.out.println(e.getMessage());
     }
@@ -135,6 +136,7 @@ private void getMessageById(Context context){
         }else{
             new ArrayList<>();
         }
+        context.status(200);
     } catch (Exception e) {
         System.out.println(e.getMessage());
     }
