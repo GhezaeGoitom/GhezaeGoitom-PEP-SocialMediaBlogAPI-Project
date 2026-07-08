@@ -133,8 +133,10 @@ private void getMessageById(Context context){
         
         if (message != null) {
          context.json(message);   
-        }else{
-            context.json(new ArrayList<>());
+        }
+        // no message
+        else{
+            context.json("");
         }
         context.status(200);
     } catch (Exception e) {
