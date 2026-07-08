@@ -1,5 +1,7 @@
 package Controller;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -126,7 +128,13 @@ private void getAllMessages(Context context){
 private void getMessageById(Context context){
     try {
         int id = Integer.parseInt(context.pathParam("message_id"));
-        context.json(messageService.getMessageById(id));
+        Message message = messageService.getMessageById(id);
+        
+        if (message != null) {
+         context.json(message);   
+        }else{
+            new ArrayList<>();
+        }
     } catch (Exception e) {
         System.out.println(e.getMessage());
     }

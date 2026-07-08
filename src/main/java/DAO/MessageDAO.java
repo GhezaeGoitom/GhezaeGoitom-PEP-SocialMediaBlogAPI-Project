@@ -79,12 +79,14 @@ public List<Message> getAllMessages(){
 
 public Message getMessageById(int message_id){
 
-  Message message = new Message();
+  Message message = null;
 
 try (Connection connection = ConnectionUtil.getConnection()) {
 
-  PreparedStatement ps = connection.prepareStatement(getAllMessagesQuery);
+  PreparedStatement ps = connection.prepareStatement(getMessageByIdQuery);
   ps.setInt(1, message_id);
+
+  message = new Message();
 
   ResultSet rs = ps.executeQuery();
 
