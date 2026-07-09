@@ -142,8 +142,8 @@ public Message updateMessageById(int id, String message_text){
 try (Connection connection = ConnectionUtil.getConnection()) {
   
   PreparedStatement ps = connection.prepareStatement(updateMessageByIdQuery);
-  ps.setInt(1, id);
-  ps.setString(2, message_text);
+  ps.setString(1, message_text);
+  ps.setInt(2, id);
   int rows = ps.executeUpdate();
 
   if (rows == 0) {
