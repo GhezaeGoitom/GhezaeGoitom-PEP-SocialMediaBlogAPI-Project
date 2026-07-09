@@ -63,7 +63,7 @@ public Message updateMessageById(int id, String messageText){
     throw new IllegalArgumentException("message not found");
   }
 
-  return updateMessageById(id, messageText);
+  return messageDAO.updateMessageById(id, messageText);
 }
 
 }
