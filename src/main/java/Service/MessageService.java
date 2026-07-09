@@ -49,4 +49,9 @@ public Message getMessageById(int id){
   return messageDAO.getMessageById(id);
 }
 
+//delete message by id
+public Message deleteMessageById(int id){
+  return messageDAO.deleteMessageById(id);
+}
+
 }

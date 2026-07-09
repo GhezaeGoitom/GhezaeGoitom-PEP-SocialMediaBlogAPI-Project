@@ -17,7 +17,7 @@ public class MessageDAO {
 String createMessageQuery = "INSERT INTO message(posted_by,message_text,time_posted_epoch) VALUES (?,?,?)";
 String getAllMessagesQuery = "SELECT * FROM message";
 String getMessageByIdQuery = "SELECT * FROM message WHERE message_id = ?";
-
+String deleteMessageByIdQuery = "DELETE FROM message WHERE message_id = ?";
 
 public Message createMessage(Message message){
 
@@ -104,6 +104,37 @@ try (Connection connection = ConnectionUtil.getConnection()) {
 return message;
 
 }
+
+
+public Message deleteMessageById(int id){
+
+  Message message = getMessageById(id);
+
+  if (message == null) return null;
+
+try (Connection connection = ConnectionUtil.getConnection()) {
+
+  PreparedStatement ps = connection.prepareStatement(deleteMessageByIdQuery);
+  ps.setInt(1, id);
+
+  int rows = ps.executeUpdate();
+
+  if (rows == 0) {
+    return null;
+  }
+
+    return message;
+
+  
+} catch (SQLException e) {
+  System.out.println("There is an error deleting message : "+e.getMessage());
+}
+
+
+return null;
+}
+
+
 
 
 }
