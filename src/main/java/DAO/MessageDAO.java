@@ -18,6 +18,7 @@ String createMessageQuery = "INSERT INTO message(posted_by,message_text,time_pos
 String getAllMessagesQuery = "SELECT * FROM message";
 String getMessageByIdQuery = "SELECT * FROM message WHERE message_id = ?";
 String deleteMessageByIdQuery = "DELETE FROM message WHERE message_id = ?";
+String updateMessageByIdQuery = "UPDATE message SET message_text = ? WHERE message_id = ?";
 
 public Message createMessage(Message message){
 
@@ -135,6 +136,27 @@ return null;
 }
 
 
+
+public Message updateMessageById(int id, String message_text){
+
+try (Connection connection = ConnectionUtil.getConnection()) {
+  
+  PreparedStatement ps = connection.prepareStatement(updateMessageByIdQuery);
+  ps.setInt(1, id);
+  ps.setString(2, message_text);
+  int rows = ps.executeUpdate();
+
+  if (rows == 0) {
+    return null;
+  }
+
+return getMessageById(id);
+
+} catch (SQLException e) {
+  System.out.println("There is an error updating this message : "+e.getMessage());
+}
+return null;
+}
 
 
 }

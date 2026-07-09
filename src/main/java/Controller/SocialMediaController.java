@@ -41,9 +41,8 @@ public class SocialMediaController {
         app.get("/messages", this::getAllMessages);
         app.get("/messages/{message_id}", this::getMessageById);
         app.delete("messages/{message_id}", this::deleteMessageById);
+        app.patch("messages/{message_id}", this::updateMessageById);
         
-       
-
         return app;
     }
 
@@ -162,6 +161,32 @@ try {
 } catch (Exception e) {
     System.out.println(e.getMessage());
 }
+}
+
+
+private void updateMessageById(Context context) throws JsonProcessingException{
+    ObjectMapper mapper = new ObjectMapper();
+    Message messageText = mapper.readValue(context.body(), Message.class);
+    int id = Integer.parseInt(context.pathParam("message_id"));
+    try {
+        Message message = messageService.updateMessageById(id, messageText.getMessage_text());
+        if (message == null) {
+            context.status(400);
+        }else{
+            context.json(message);
+        }
+    } catch (IllegalArgumentException e) {
+
+        if ("invalid message input".equals(e.getMessage())) {
+            context.status(400);
+        }else if ("message not found".equals(e.getMessage())) {
+            context.status(400);
+        }else{
+            context.status(500);
+        }
+
+
+    }
 }
 
 }

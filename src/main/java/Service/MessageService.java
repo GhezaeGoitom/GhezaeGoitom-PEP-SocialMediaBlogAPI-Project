@@ -54,4 +54,16 @@ public Message deleteMessageById(int id){
   return messageDAO.deleteMessageById(id);
 }
 
+//update message by id
+public Message updateMessageById(int id, String messageText){
+  if (messageText.length() > 255 || messageText.length() < 1) {
+    throw new IllegalArgumentException("invalid message input");
+  }
+  if (getMessageById(id) == null) {
+    throw new IllegalArgumentException("message not found");
+  }
+
+  return updateMessageById(id, messageText);
+}
+
 }
