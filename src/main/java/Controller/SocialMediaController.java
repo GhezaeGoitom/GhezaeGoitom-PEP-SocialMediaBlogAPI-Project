@@ -196,9 +196,6 @@ private void getMessagesByUserIdHandler(Context context){
     try {
         int id = Integer.parseInt(context.pathParam("account_id"));
         List<Message> messages = messageService.getMessagesByUserId(id);
-        if (messages == null) {
-            context.json("");
-                }
         
         context.json(messages);
         context.status(200);
