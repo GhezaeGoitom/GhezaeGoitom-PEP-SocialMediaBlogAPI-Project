@@ -66,4 +66,9 @@ public Message updateMessageById(int id, String messageText){
   return messageDAO.updateMessageById(id, messageText);
 }
 
+
+// get messages by user id
+public List<Message> getMessagesByUserId(int id){
+return messageDAO.getMessagesByUserId(id);
+}
 }

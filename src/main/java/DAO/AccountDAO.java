@@ -15,6 +15,7 @@ String userRegistrationQuery = "INSERT INTO account(username,password) VALUES (?
 String getUserByUserNameQuery = "SELECT * FROM account WHERE username = ?";
 String getUserByUserNameAndPasswordQuery = "SELECT * FROM account WHERE username = ? AND password = ?";
 
+
 String getUserByIdQuery = "SELECT * FROM account WHERE account_id = ?";
 
 

@@ -19,6 +19,7 @@ String getAllMessagesQuery = "SELECT * FROM message";
 String getMessageByIdQuery = "SELECT * FROM message WHERE message_id = ?";
 String deleteMessageByIdQuery = "DELETE FROM message WHERE message_id = ?";
 String updateMessageByIdQuery = "UPDATE message SET message_text = ? WHERE message_id = ?";
+String getMessageByUserIdQuery = "SELECT * FROM message WHERE posted_by = ?";
 
 public Message createMessage(Message message){
 
@@ -156,6 +157,33 @@ return getMessageById(id);
   System.out.println("There is an error updating this message : "+e.getMessage());
 }
 return null;
+}
+
+
+
+public List<Message> getMessagesByUserId(int id){
+
+List<Message> messages = null;
+try (Connection connection = ConnectionUtil.getConnection()) {
+  
+PreparedStatement ps = connection.prepareStatement(getAllMessagesQuery);
+ps.setInt(1, id);
+
+ResultSet rs = ps.executeQuery();
+messages = new ArrayList<>();
+while (rs.next()) {
+  Message message = new Message();
+  message.setMessage_id(rs.getInt("messages_id"));
+  message.setMessage_text(rs.getString("message_text"));
+  message.setPosted_by(rs.getInt("posted_by"));
+  message.setTime_posted_epoch(rs.getLong("time_posted_epoch"));
+  messages.add(message);
+}
+} catch (SQLException e) {
+  System.out.println("there is an error retrieving messages from user : "+e.getMessage());
+}
+
+return messages;
 }
 
 
