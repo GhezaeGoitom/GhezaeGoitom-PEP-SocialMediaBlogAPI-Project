@@ -166,7 +166,7 @@ public List<Message> getMessagesByUserId(int id){
 List<Message> messages = null;
 try (Connection connection = ConnectionUtil.getConnection()) {
   
-PreparedStatement ps = connection.prepareStatement(getAllMessagesQuery);
+PreparedStatement ps = connection.prepareStatement(getMessageByIdQuery);
 ps.setInt(1, id);
 
 ResultSet rs = ps.executeQuery();
