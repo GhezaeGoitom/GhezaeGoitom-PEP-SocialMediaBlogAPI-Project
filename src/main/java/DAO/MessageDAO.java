@@ -173,7 +173,7 @@ ResultSet rs = ps.executeQuery();
 messages = new ArrayList<>();
 while (rs.next()) {
   Message message = new Message();
-  message.setMessage_id(rs.getInt("messages_id"));
+  message.setMessage_id(rs.getInt("message_id"));
   message.setMessage_text(rs.getString("message_text"));
   message.setPosted_by(rs.getInt("posted_by"));
   message.setTime_posted_epoch(rs.getLong("time_posted_epoch"));
