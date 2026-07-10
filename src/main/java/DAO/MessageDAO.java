@@ -163,14 +163,13 @@ return null;
 
 public List<Message> getMessagesByUserId(int id){
 
-List<Message> messages = null;
+List<Message> messages = new ArrayList<>();
 try (Connection connection = ConnectionUtil.getConnection()) {
   
 PreparedStatement ps = connection.prepareStatement(getMessageByIdQuery);
 ps.setInt(1, id);
 
 ResultSet rs = ps.executeQuery();
-messages = new ArrayList<>();
 while (rs.next()) {
   Message message = new Message();
   message.setMessage_id(rs.getInt("message_id"));

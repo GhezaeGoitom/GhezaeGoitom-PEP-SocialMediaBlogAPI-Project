@@ -1,6 +1,5 @@
 package Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -93,6 +92,7 @@ public class SocialMediaController {
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            context.status(500);
         }
 
 
@@ -125,6 +125,7 @@ private void getAllMessagesHandler(Context context){
         context.status(200);
     } catch (Exception e) {
         System.out.println(e.getMessage());
+        context.status(500);
     }
 }
 
@@ -144,6 +145,7 @@ private void getMessageByIdHandler(Context context){
         context.status(200);
     } catch (Exception e) {
         System.out.println(e.getMessage());
+        context.status(500);
     }
 }
 
@@ -162,6 +164,7 @@ try {
     context.status(200);
 } catch (Exception e) {
     System.out.println(e.getMessage());
+    context.status(500);
 }
 }
 
@@ -201,6 +204,7 @@ private void getMessagesByUserIdHandler(Context context){
         context.status(200);
     } catch (Exception e) {
         System.out.println(e.getMessage());
+        context.status(500);
     }
 
 
